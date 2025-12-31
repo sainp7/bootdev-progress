@@ -1,6 +1,7 @@
 # Learn git
 
 ## Chapter 1: Repository
+
 - `git init` - creates a new repository
 - `git status` - shows the status of the repository
 - A file can be in one of three states:
@@ -22,6 +23,7 @@
   identifies the commit. e.g `5ba786fcc93e8092831c01e71444b9baa2228a4f`
 
 ## Chapter 2: Internals
+
 - While commit hashes are derived from their content changes, there's
   also [some other stuff](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects#_git_commit_objects) that affects the
   end hash.
@@ -53,24 +55,44 @@
       will only store it once.
 
 ## Chapter 3: Config
-- `git config list --local`: List all local Git configuration settings
-- `git config set --global user.name <user_name>`
-- `git config set --global user.email <email_address>`
-- `git config get <key>`: Get the value of a configuration setting
-- Keys are in the format `<section>.<keyname>.` e.g. `user.name` or `<repo_name>.<any_repo_scope_key>`
-- `git config unset <key>`: Unset a configuration setting
+
+- `git config list --local`: List all local Git configuration settings.
+- `git config set --global user.name <user_name>`.
+- `git config set --global user.email <email_address>`.
+- `git config get <key>`: Get the value of a configuration setting.
+- Keys are in the format `<section>.<keyname>.` e.g. `user.name` or `<repo_name>.<any_repo_scope_key>`.
+- `git config unset <key>`: Unset a configuration setting.
 - Typically, in a key/value store, like a Python dictionary, you aren't allowed to have duplicate keys. Strangely
   enough, Git doesn't care. So you can have duplicate keys in your configuration.
-- `git config unset --all example.key`: Unset all keys with the key name `example.key`
-- `git config remove-section <section>`: Remove a configuration section
+- `git config unset --all example.key`: Unset all keys with the key name `example.key`.
+- `git config remove-section <section>`: Remove a configuration section.
 - There are several locations where Git can be configured. From more general to more specific, they are:
-    - **system**: `/etc/gitconfig`, a file that configures Git for all users on the system
-    - **global**: `~/.gitconfig`, a file that configures Git for all projects of a user
-    - **local**: `.git/config`, a file that configures Git for a specific project
-    - **worktree**: `.git/config.worktree`, a file that configures Git for part of a project
+    - **system**: `/etc/gitconfig`, a file that configures Git for all users on the system.
+    - **global**: `~/.gitconfig`, a file that configures Git for all projects of a user.
+    - **local**: `.git/config`, a file that configures Git for a specific project.
+    - **worktree**: `.git/config.worktree`, a file that configures Git for part of a project.
 - If you set a configuration in a more specific location, it will override the same configuration in a more general
   location. For e.g, if you set user.name in the local configuration, it will override the user.name set in the
   global configuration.
 
 ## Chapter 4: Branching
 
+- A branch is just a named pointer to a specific commit. When you create a branch, you are creating a new pointer to a
+  specific commit. The commit that the branch points to is called the tip of the branch.
+- Because a branch is just a pointer to a commit, they're lightweight and "cheap" resource-wise to create. When you
+  create 10 branches, you're not creating 10 copies of your project on your hard drive.
+- `git branch`: List all branches in the current repository.
+- `git branch -m oldname newname`: Rename a branch.
+- `git branch my_new_branch`: Create a new branch, But it doesn't switch to it.
+- `git switch -c my_new_branch`: Creates (if it doesn't already exist) and switch to a new branch.
+- `git checkout <branch_name>`: Switch to an existing branch.
+- `git log --decorate <no|short|full> --oneline --graph`: Shows a graph of the branches and commits.
+
+## Chapter 5: Merge
+
+- `git merge <branch_name>`: Merges the specified branch into the current branch.
+- A merge commit is the result of merging two branches.
+- `git log --oneline --decorate --graph --parents`: Shows a graph of the branches and commits. The `--parents` flag
+  shows the parent commits of each commit. The `--graph` flag shows the branches as lines.
+- If a branch has all the commits from another branch, it can do a fast-forward merge. In this case, Git doesn't create
+  a merge commit.
